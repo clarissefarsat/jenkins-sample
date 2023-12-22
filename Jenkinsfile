@@ -17,6 +17,14 @@ node () {
 			} 
  		} 
 	}
+
+	
+	stage('Quality check') {
+		withSonarQubeEnv('Sonar') {
+		bat "mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=clarissefarsat_jenkins-demo"
+	}
+	}
+	
 	stage ('App-IC - Post build actions') {
 /*
 Please note this is a direct conversion of post-build actions. 
@@ -28,10 +36,5 @@ A logic review is suggested.
  
 	}
 
-	stage('Quality check') {
-		withSonarQubeEnv('Sonar') {
-		bat "mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=clarissefarsat_jenkins-demo"
-	}
-	}
 }
 }
